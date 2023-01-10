@@ -43,7 +43,7 @@
               <li class="active "><a href="#" id="Newshop" >
                 新規店舗登録
               </a></li>
-              <li ><a href="yafood/templates/mngmt">トップ</a></li>
+              <li ><a href="/mngmt">トップ</a></li>
               <li><a href="#">設定</a></li>
             </ul>
           </div>
@@ -67,20 +67,12 @@
         {% for item in  shops %}
         <div>
           <tr class="ShopData">
-            <td scope="row">01</td> 
-            <td >1</td>    <!--店ID-->
-            <td>三沢菓子店</td>  <!--店名-->
-            <td>ミサワカシテン</td>   <!--店読み-->
-            <td>三沢</td>      <!--担当者-->
-            <td>0000－00－0000</td>   <!--電話-->
-          </tr>
-          <tr class="ShopData">
-            <td scope="row">02</td> 
-            <td >2</td>    <!--店ID-->
-            <td>ラグノオ</td>  <!--店名-->
-            <td>ラグノオ</td>   <!--店読み-->
-            <td>武藤</td>      <!--担当者-->
-            <td>0000－00－0000</td>   <!--電話-->
+            <td scope="row">{{ cnt.i }}</td> 
+            <td >{{ item.id }}</td>    <!--店ID-->
+            <td>{{ item.name }}</td>  <!--店名-->
+            <td>{{ item.yomi}}</td>   <!--店読み-->
+            <td>{{ item.staff}}</td>      <!--担当者-->
+            <td>{{ item.tel}}</td>   <!--電話-->
           </tr>
           {% set cnt.i = cnt.i + 1 %}
         </div>
@@ -107,8 +99,8 @@
                     <input type="text" class="form-control input-lg" id="Edit-name"  name="name"  value="" placeholder="○○洋菓子店"> 
                   </div> 
                   <div class="input-group mb-3  form-group">
-                    <label class="input-group-text" style="width:200px;" >読み</label>
-                    <input type="text" class="form-control input-lg" id="Edit-yomi"   name="yomi"  value=""  placeholder="マルマルヨウガシテン">
+                    <label class="input-group-text" style="width:200px;" >よみ</label>
+                    <input type="text" class="form-control input-lg" id="Edit-yomi"   name="yomi"  value=""  placeholder="まるまるようがしてん">
                   </div> 
                   <div class="input-group mb-3  form-group">
                     <label class="input-group-text"  style="width:200px;">担当者</label>
@@ -116,7 +108,7 @@
                   </div>
                   <div class="input-group mb-3  form-group">
                     <label class="input-group-text"  style="width:200px;">電話</label>
-                    <input type="text" class="form-control input-lg" id="Edit-tel"   name="tel"  value="" placeholder="0000-00-0000" >
+                    <input type="text" class="form-control input-lg" id="Edit-tel"   name="tel"  value="" placeholder="0138-57-0000" >
                   </div>
                 </div>
   

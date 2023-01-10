@@ -31,21 +31,7 @@
               '○画面（1対1のチャット、グループ、またはトークルーム）を一意に識別する値\n' +
               'liff.getContext()=' + JSON.stringify(liff.getContext()) + '\n' +
               '○ユーザー名等\n' +
-              'liff.getDecodedIDToken()=' + JSON.stringify(liff.getDecodedIDToken()) + '\n' ;
-
-			  liff.getProfile().then(function(profile) {
-              		document.getElementById('log').value += 'liff.getProfile()=' + JSON.stringify(profile) + '\n';
-            	}).catch(function(error) {
-              		document.getElementById('log').value += 'getProfile ng\n' + JSON.stringify(error);
-            	});
-
-			  
-			  liff.getFriendship().then(function(data) {
-              		document.getElementById('log').value += 'liff.getFriendship()=' + JSON.stringify(data) + '\n';
-            	}).catch(function(error) {
-              		document.getElementById('log').value += 'getFriendship ng\n';
-            	});
-
+              'liff.getDecodedIDToken()=' + JSON.stringify(liff.getDecodedIDToken()) + '\n';
           });
         })
         .catch((err) =>{
