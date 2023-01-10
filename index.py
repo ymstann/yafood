@@ -14,11 +14,13 @@ from linebot.models import (
     ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction, FlexSendMessage, PostbackAction,
     MessageAction, URIAction, QuickReplyButton, QuickReply
 )
+
 import base64
 from io import BytesIO
 from PIL import Image
 #from hamlish_jinja import HamlishExtension
 #from werkzeug import ImmutableDict
+
 from flask_sqlalchemy import SQLAlchemy
 
 import glob # テストデータ用
@@ -40,13 +42,13 @@ LINE_CHANNEL_ACCESS_TOKEN = os.environ["LINE_CHANNEL_ACCESS_TOKEN"]
 LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
-handler = WebhookHandler(LINE_CHANNEL_SECRET)
+handle = WebhookHandler(LINE_CHANNEL_SECRET)
 
-@app.route("/", methods=['GET'])
+@app.route("/")
 def index():
 	moji = u"こんにちは、ビ研です"
 
-	return "<h1>Tsugabot Home test1</h1>"
+	return "<h1>Tsugabot Home test cut handler</h1>"
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -59,32 +61,32 @@ def callback():
 
     # handle webhook body
     try:
-        handler.handle(body, signature)
+        handle.handle(body, signature)
     except InvalidSignatureError:
         abort(400)
 
     return 'OK'
 
-@app.route("/custmr", methods=['GET'])
+@app.route("/custmr")
 def custmr():
 	moji = u"こんにちは、ビ研です"
 
 	return render_template("/custmr/index.html",moji=moji)
 
 
-@app.route("/auth", methods=['GET'])
+@app.route("/auth")
 def auth():
 	moji = u"Loginしてください"
 
 	return render_template("/auth/index.html",moji=moji)
 
-@app.route("/mngmt", methods=['GET'])
+@app.route("/mngmt")
 def mngmt():
 	moji = u"こんにちは、ビ研です"
 
 	return render_template("/mngmt/index.html",moji=moji)
 
-@app.route("/mngmt/rsvlist", methods=['GET'])
+@app.route("/mngmt/rsvlist")
 def rsvlist():
 	moji = u"こんにちは、ビ研です"
 
@@ -140,7 +142,7 @@ def rsvdtl_resp():
 
 	return render_template("/mngmt/rsvdtl_resp.html",rsvid=id,name=name,date=rsvdate,command=cmd)
 
-@app.route("/mngmt/shoplist", methods=['GET'])
+@app.route("/mngmt/shoplist")
 def shoplist():
 	
 		# テストデータ
@@ -185,7 +187,7 @@ def shop_resp():
 
 	return render_template("/mngmt/shop_resp.html",rsvid=id,status=status)
 
-@app.route("/mngmt/itemlist", methods=['GET'])
+@app.route("/mngmt/itemlist")
 def itemlist():
 	# テスト画像データ（本来は、データベースから読み込む
 	files = glob.glob("static/custmr/images/*.jpg")
@@ -272,7 +274,7 @@ def test():
 
 	return render_template("test.html",moji1=msg1,moji2=msg2,kotae=kotae)
 
-@app.route("/read_db", methods=['GET'])
+@app.route("/read_db")
 def read_db():
 	dsn = os.environ.get('DATABASE_URL')
 	conn = psycopg2.connect(dsn)
@@ -297,7 +299,7 @@ def read_db():
 #	return jsonify(res)
 
 # MessageEvent
-@handler.add(MessageEvent, message=TextMessage)
+@handle.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 	line_bot_api.reply_message(
         event.reply_token,
@@ -308,7 +310,7 @@ def handle_message(event):
 	)
 
 # フォローイベントの場合の処理
-@handler.add(FollowEvent)
+@handle.add(FollowEvent)
 def handle_follow(event):
     line_bot_api.reply_message(
         event.reply_token,
